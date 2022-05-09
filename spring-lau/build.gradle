@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+group 'org.springframework'
+version '5.2.16.BUILD-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
+    mavenCentral()
+}
+
+dependencies {
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    optional("junit:junit")
+    optional("org.junit.jupiter:junit-jupiter-api")
+
+    testCompile("org.junit.platform:junit-platform-runner") {
+        exclude group: "junit", module: "junit"
+    }
+    testCompile("org.junit.platform:junit-platform-testkit")
+
+    testCompile("de.bechte.junit:junit-hierarchicalcontextrunner")
+    testRuntime("org.junit.vintage:junit-vintage-engine") {
+        exclude group: "junit", module: "junit"
+    }
+    implementation project(":spring-context")
+}
+
+test {
+    useJUnitPlatform()
+}
